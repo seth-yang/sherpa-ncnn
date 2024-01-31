@@ -29,6 +29,7 @@ public class MicClientDemo {
     public void record () throws IOException {
         try (Socket socket = new Socket (server, port)) {
             recorder = initMic (format);
+
             if (recorder != null) {
                 InputStream in = socket.getInputStream ();
                 OutputStream out = socket.getOutputStream ();
@@ -37,9 +38,13 @@ public class MicClientDemo {
                 thread = new Thread (this::receive);
 
                 int size = recorder.getBufferSize () / 8 * format.getFrameSize (), length;
+                out.write (size >> 8);
+                out.write (size & 0xff);
+                out.flush ();
                 byte[] buff = new byte[size];
 
                 recorder.start ();
+                thread.start ();
                 System.out.println ("I'm listening, please speak to me.");
                 System.out.println ("You can say \"再见\", \"拜拜\" or \"Goodbye\" to exit the program");
                 while (running && (length = recorder.read (buff, 0, size)) != -1) {
@@ -55,16 +60,19 @@ public class MicClientDemo {
             while (running && !thread.isInterrupted ()) {
                 String line = reader.readLine ();
                 if (line != null && !line.isEmpty ()) {
-                    System.out.println (line);
+                    if (!line.startsWith ("::") && !line.endsWith ("::")) {
+                        // React only to non-control commands
+                        System.out.println (line);
 
-                    if ("再见".equals (line) || "拜拜".equals (line)) {
-                        running = false;
-                        thread.interrupt ();
+                        if ("再见".equals (line) || "拜拜".equals (line)) {
+                            running = false;
+                            thread.interrupt ();
 
-                        recorder.stop ();
-                        recorder.close ();
+                            recorder.stop ();
+                            recorder.close ();
 
-                        System.out.println ("好的，再见!");
+                            System.out.println ("好的，再见!");
+                        }
                     }
                 }
             }
@@ -88,7 +96,7 @@ public class MicClientDemo {
             System.exit (0);
         }
 
-        String server = "127.0.0.1", s_port = null;
+        String server = "127.0.0.1", s_port;
         int port = 56789;
         if (parser.isArgPresent ('H')) {
             server = parser.getValue ('H');

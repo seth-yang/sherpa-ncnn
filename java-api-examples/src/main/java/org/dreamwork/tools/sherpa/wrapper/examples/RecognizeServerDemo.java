@@ -7,10 +7,7 @@ import org.dreamwork.tools.sherpa.wrapper.SherpaHelper;
 import org.dreamwork.tools.sherpa.wrapper.examples.utils.Logger;
 
 import java.io.*;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketAddress;
+import java.net.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -92,6 +89,7 @@ public class RecognizeServerDemo {
 
                 receive (size, in, writer);
                 logger.info ("the client %s lost.", remote);
+                recognizer.reset (false);
                 watching = false;
             } catch (IOException ex) {
                 logger.warn (ex.getMessage (), ex);
@@ -143,41 +141,46 @@ public class RecognizeServerDemo {
             }
             logger.info ("watcher killed.");
         });
+        try {
+            while ((length = in.read (buff, 0, size)) > 0) {
+                lastReceivedAt = System.currentTimeMillis ();
+                for (int i = 0; i < length; i += 2) {
+                    short value = (short) (((buff[i + 1] & 0xff) << 8) | (buff[i] & 0xff));
+                    samples[i / 2] = value / 32768.0f;
+                }
+                recognizer.acceptSamples (samples);
+                while (recognizer.isReady ()) {
+                    recognizer.decode ();
+                }
 
-        while ((length = in.read (buff, 0, size)) > 0) {
-            lastReceivedAt = System.currentTimeMillis ();
-            for (int i = 0; i < length; i += 2) {
-                short value = (short) (((buff[i + 1] & 0xff) << 8) | (buff[i] & 0xff));
-                samples[i / 2] = value / 32768.0f;
-            }
-            recognizer.acceptSamples (samples);
-            while (recognizer.isReady ()) {
-                recognizer.decode ();
-            }
-
-            long now = System.currentTimeMillis ();
-            String text = recognizer.getText ();
-            if (text != null && !text.isEmpty ()) {
-                if (!text.equals (old)) {
-                    old = text;
-                    lastTimestamp = now;
-                } else {
-                    if (now - lastTimestamp > 200) {
-                        old = null;
-                        lastTimestamp = 0;
+                long now = System.currentTimeMillis ();
+                String text = recognizer.getText ();
+                if (text != null && !text.isEmpty ()) {
+                    if (!text.equals (old)) {
+                        old = text;
+                        lastTimestamp = now;
+                    } else {
+                        if (now - lastTimestamp > 200) {
+                            old = null;
+                            lastTimestamp = 0;
+                        }
                     }
                 }
-            }
 
-            boolean endpoint = recognizer.isEndpoint ();
-            if (endpoint /*in.available () == 0*/) {
-                logger.info ("got a result: %s", old);
-                writer.println (old);
-                // tells the client, recognize done.
-                writer.println ("::Finish::");
-                recognizer.reset (false);
-                watching = false; // kill the watcher
+                boolean endpoint = recognizer.isEndpoint ();
+                if (endpoint && text != null && !text.isEmpty ()) {
+                    logger.info ("got a result: %s", text);
+                    // send the recognize result to the client
+                    writer.println (text);
+                    // tells the client, recognize done.
+                    writer.println ("::Finish::");
+                    writer.flush ();
+                    recognizer.reset (false);
+                    watching = false; // kill the watcher
+                }
             }
+        } catch (SocketException ex) {
+            System.err.println ("remote socket disconnected abnormally.");
         }
     }
 }
