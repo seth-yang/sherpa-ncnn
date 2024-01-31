@@ -8,13 +8,13 @@ public class RecognizerConfig {
     private float rule1MinTrailingSilence = 2.4f;
     private float rule2MinTrailingSilence = 1f;
     private float rule3MinUtteranceLength = 30f;
-    private String hotWordsFile = "";
-    private float hotWordsScore = 1.5f;
+    private String hotwordsFile = "";
+    private float hotwordsScore = 1.5f;
 
     public RecognizerConfig () {
     }
 
-    public RecognizerConfig (FeatureExtractorConfig featConfig, ModelConfig modelConfig, DecoderConfig decoderConfig, boolean enableEndpoint, float rule1MinTrailingSilence, float rule2MinTrailingSilence, float rule3MinUtteranceLength, String hotwordsFile, float hotWordsScore) {
+    public RecognizerConfig (FeatureExtractorConfig featConfig, ModelConfig modelConfig, DecoderConfig decoderConfig, boolean enableEndpoint, float rule1MinTrailingSilence, float rule2MinTrailingSilence, float rule3MinUtteranceLength, String hotwordsFile, float hotwordsScore) {
         this.featConfig = featConfig;
         this.modelConfig = modelConfig;
         this.decoderConfig = decoderConfig;
@@ -22,8 +22,8 @@ public class RecognizerConfig {
         this.rule1MinTrailingSilence = rule1MinTrailingSilence;
         this.rule2MinTrailingSilence = rule2MinTrailingSilence;
         this.rule3MinUtteranceLength = rule3MinUtteranceLength;
-        this.hotWordsFile = hotwordsFile;
-        this.hotWordsScore = hotWordsScore;
+        this.hotwordsFile = hotwordsFile;
+        this.hotwordsScore = hotwordsScore;
     }
 
     public FeatureExtractorConfig getFeatConfig () {
@@ -82,19 +82,19 @@ public class RecognizerConfig {
         this.rule3MinUtteranceLength = rule3MinUtteranceLength;
     }
 
-    public String getHotWordsFile () {
-        return hotWordsFile;
+    public String getHotwordsFile () {
+        return hotwordsFile;
     }
 
-    public void setHotWordsFile (String hotWordsFile) {
-        this.hotWordsFile = hotWordsFile;
+    public void setHotwordsFile (String hotwordsFile) {
+        this.hotwordsFile = hotwordsFile;
     }
 
-    public float getHotWordsScore () {
-        return hotWordsScore;
+    public float getHotwordsScore () {
+        return hotwordsScore;
     }
 
-    public void setHotWordsScore (float hotWordsScore) {
-        this.hotWordsScore = hotWordsScore;
+    public void setHotwordsScore (float hotwordsScore) {
+        this.hotwordsScore = hotwordsScore;
     }
 }
