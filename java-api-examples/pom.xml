@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <groupId>sherpa.ncnn</groupId>
+    <artifactId>sherpa-ncnn-examples</artifactId>
+    <version>1.0.0</version>
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <!-- you can clone dreamwork-base from https://github.com/seth-yang/dreamwork-base.git with branch 3.1.4，and build it -->
+        <!--
+            git clone -b 3.1.4 https://github.com/seth-yang/dreamwork-base.git
+            cd dreamwork-base
+            mvn install
+        -->
+        <dependency>
+            <groupId>org.dreamwork</groupId>
+            <artifactId>dreamwork-base</artifactId>
+            <version>3.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>sherpa.ncnn</groupId>
+            <artifactId>sherpa-ncnn-jni</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+<!--
+        <dependency>
+            <groupId>sherpa.ncnn</groupId>
+            <artifactId>sherpa-ncnn-win32-x86_64</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.30</version>
+        </dependency>
+    </dependencies>
+</project>
