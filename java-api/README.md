@@ -1,3 +1,4 @@
+[English Version](README_en.md)
 ## 简介
 `sherpa-ncnn-jin` 是从 [SherpaNcnn.kt](../android/SherpaNcnn/app/src/main/java/com/k2fsa/sherpa/ncnn/SherpaNcnn.kt) 改编而来，并根据 Java 的使用习惯进行了部分微调:
 - 采用 Apache Maven 来管理项目

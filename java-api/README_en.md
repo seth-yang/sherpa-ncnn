@@ -1,3 +1,4 @@
+[中文文档](README.md)
 ## Introduction
 `sherpa-ncnn-jin` is adapted from [SherpaNcnn.kt](../android/SherpaNcnn/app/src/main/java/com/k2fsa/sherpa/ncnn/SherpaNcnn.kt) and based on Java Some fine-tuning has been made to usage habits:
 - Use Apache Maven to manage projects
