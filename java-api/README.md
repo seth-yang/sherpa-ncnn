@@ -26,7 +26,8 @@ cd /d %USERPROFILE%\tool-chains
 curl -o .\apache-maven-3.9.6-bin.zip https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.zip
 tar zxf apache-maven-3.9.6-bin.zip
 
-set PATH="%ProgramFiles%\Java\jdk-17\bin;%ProgramFiles%\Git\bin;%ProgramFiles%\Git LFS;%USERPROFILE%\tool-chains\apache-maven-3.9.6\bin;%PATH%"
+set JAVA_HOME="%ProgramFiles%\Java\jdk-17"
+set PATH="%JAVA_HOME%\bin;%ProgramFiles%\Git\bin;%ProgramFiles%\Git LFS;%USERPROFILE%\tool-chains\apache-maven-3.9.6\bin;%PATH%"
 ```
 
 ## 构建和安装
