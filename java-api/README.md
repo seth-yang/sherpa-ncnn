@@ -14,20 +14,28 @@ sudo apt-get -y install git default-jdk maven
 Windows
 
 - 访问 https://learn.microsoft.com/zh-cn/windows/package-manager/winget/ 并按照页面内容安装`winget`命令行工具
-- 从 [Oracle Java Downloads](https://www.oracle.com/java/technologies/downloads/) 下载一个适合您 windows 的版本安装
-- 下载 [apache-maven-3.9.6-bin.zip](https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.zip)，并解缩
+- 或直接在 [微软应用商店](https://www.microsoft.com/p/app-installer/9nblggh4nns1#activetab=pivot:overviewtab) 进行安装 `winget`
+- 然后打开 Windows Terminal 或 Command Prompt 执行以下命令
 ```bash
+winget install "Java SE Development Kit 17"
+winget install "Git.Git"
+winget install "Git LFS"
+
 mkdir %USERPROFILE%\tool-chains
 cd /d %USERPROFILE%\tool-chains
 curl -o .\apache-maven-3.9.6-bin.zip https://dlcdn.apache.org/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.zip
 tar zxf apache-maven-3.9.6-bin.zip
 
+set PATH="%ProgramFiles%\Java\jdk-17\bin;%ProgramFiles%\Git\bin;%ProgramFiles%\Git LFS;%USERPROFILE%\tool-chains\apache-maven-3.9.6\bin;%PATH%"
 ```
 
 ## 构建和安装
-在 linux 平台下:
 ```bash
+# linux
 cd ~
+# windows
+cd /d %USERPROFILE%
+
 git clone https://github.com/seth-yang/sherpa-ncnn.git
 cd sherpa-ncnn/java-api
 mvn install
