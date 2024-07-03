@@ -47,7 +47,7 @@ Usage:
     /path/to/joiner.ncnn.param \
     /path/to/joiner.ncnn.bin \
     device_name \
-    [num_threads] [decode_method, can be greedy_search/modified_beam_search]
+    [num_threads] [decode_method, can be greedy_search/modified_beam_search] [hotwords_file] [hotwords_score]
 
 Please refer to
 https://k2-fsa.github.io/sherpa/ncnn/pretrained_models/index.html
@@ -67,7 +67,7 @@ card 3: UACDemoV10 [UACDemoV1.0], device 0: USB Audio [USB Audio]
 
 and if you want to select card 3 and the device 0 on that card, please use:
 
-  hw:3,0
+  plughw:3,0
 
 as the device_name.
 )usage";
@@ -106,6 +106,14 @@ as the device_name.
     if (method == "greedy_search" || method == "modified_beam_search") {
       decoder_conf.method = method;
     }
+  }
+
+  if (argc >= 11) {
+    config.hotwords_file = argv[10];
+  }
+
+  if (argc == 12) {
+    config.hotwords_score = atof(argv[11]);
   }
 
   int32_t expected_sampling_rate = 16000;
@@ -148,6 +156,10 @@ as the device_name.
     }
 
     bool is_endpoint = recognizer.IsEndpoint(s.get());
+
+    if (is_endpoint) {
+      s->Finalize();
+    }
     auto text = recognizer.GetResult(s.get()).text;
 
     if (!text.empty() && last_text != text) {
