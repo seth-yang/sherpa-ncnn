@@ -43,6 +43,11 @@ cd /d %USERPROFILE%\projects
 git clone -b 3.1.4 https://github.com/seth-yang/dreamwork-base.git
 cd dreamwork-base
 mvn install
+
+cd ..
+git clone -b 1.1.1 https://github.com/seth-yang/application-bootloader.git
+cd application-bootloader
+mvn install
 ```
 
 ### 动态链接库
@@ -59,7 +64,21 @@ git clone https://github.com/seth-yang/sherpa-ncnn.git
 cd sherpa-ncnn
 ```
 访问 https://k2-fsa.github.io/sherpa/ncnn/index.html 并根据其内容进行相应平台的编译。
-需要注意的是
+
+#### 下载已经编译好的库
+```bash
+# linux
+cd ~/projects
+
+# windows
+cd /d %USERPROFILE%\projects
+
+# both
+git clone https://github.com/seth-yang/sherpa-ncnn-java.git
+cd sherpa-ncnn-java
+mvn package
+```
+在项目的 `modules/sherpa-ncnn-{platform}-{arch}`目录下将生成包裹了本地动态链接库的.jar文件，您可以在后面的例子中直接使用
 
 ### 下载预训练模型
 

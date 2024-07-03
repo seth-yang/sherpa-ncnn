@@ -25,6 +25,17 @@
             <artifactId>dreamwork-base</artifactId>
             <version>3.1.4</version>
         </dependency>
+        <!-- you can clone dreamwork-base from https://github.com/seth-yang/application-bootloader.git with branch 3.1.4，and build it -->
+        <!--
+            git clone -b 1.1.1 https://github.com/seth-yang/application-bootloader.git
+            cd dreamwork-base
+            mvn install
+        -->
+        <dependency>
+            <groupId>org.dreamwork</groupId>
+            <artifactId>dreamwork-application-bootloader</artifactId>
+            <version>1.1.1</version>
+        </dependency>
         <dependency>
             <groupId>sherpa.ncnn</groupId>
             <artifactId>sherpa-ncnn-jni</artifactId>
@@ -45,7 +56,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.30</version>
+            <version>1.7.36</version>
         </dependency>
     </dependencies>
 </project>
