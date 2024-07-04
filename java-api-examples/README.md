@@ -65,6 +65,7 @@ cd sherpa-ncnn
 ```
 访问 https://k2-fsa.github.io/sherpa/ncnn/index.html 并根据其内容进行相应平台的编译。
 
+*需要注意的是，您在编译时必须开启 `BUILD_SHARED_LIBS` 和 `SHERPA_NCNN_ENABLE_JNI` 选项，才能支持 jni*
 #### 下载已经编译好的库
 ```bash
 # linux
@@ -76,10 +77,12 @@ cd /d %USERPROFILE%\projects
 # both
 git clone https://github.com/seth-yang/sherpa-ncnn-java.git
 cd sherpa-ncnn-java
-mvn package
+mvn install
 ```
 在项目的 `modules/sherpa-ncnn-{platform}-{arch}`目录下将生成包裹了本地动态链接库的.jar文件，您可以在后面的例子中直接使用
 
 ### 下载预训练模型
+访问 [https://k2-fsa.github.io/sherpa/ncnn/pretrained_models/index.html](https://k2-fsa.github.io/sherpa/ncnn/pretrained_models/index.html),
+下载必须的预训练模型
 
 ## 构建并运行示例代码
